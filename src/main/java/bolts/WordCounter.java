@@ -20,7 +20,7 @@ public class WordCounter extends BaseBasicBolt {
    */
   @Override
   public void cleanup() {
-    System.out.println("-- Word Counter [" + name + "-" + id + "] --");
+    System.out.println("--- Word Counter [" + name + "-" + id + "] ---");
     for (Map.Entry<String, Integer> entry : counters.entrySet()) {
       System.out.println(entry.getKey() + ": " + entry.getValue());
     }

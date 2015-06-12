@@ -35,10 +35,8 @@ public class WordReader extends BaseRichSpout {
    */
   @Override
   public void nextTuple() {
-    /**
-     * The nextuple it is called forever, so if we have been readed the file we will wait and then
-     * return
-     */
+    // The next tuple it is called forever, so if we have read out the file we
+    // will wait and then return.
     if (completed) {
       try {
         Thread.sleep(1000);
@@ -47,19 +45,19 @@ public class WordReader extends BaseRichSpout {
       }
       return;
     }
-    String str;
+
     // Open the reader
+    String str;
     BufferedReader reader = new BufferedReader(fileReader);
     try {
-      // Read all lines
       while ((str = reader.readLine()) != null) {
-        /**
-         * By each line emmit a new value with the line as a their
-         */
+        // By each line emit a new value with the line as a their
         this.collector.emit(new Values(str), str);
       }
+
     } catch (Exception e) {
       throw new RuntimeException("Error reading tuple", e);
+
     } finally {
       completed = true;
     }
@@ -79,7 +77,7 @@ public class WordReader extends BaseRichSpout {
   }
 
   /**
-   * Declare the output field "word"
+   * Declare the output field "line"
    */
   @Override
   public void declareOutputFields(OutputFieldsDeclarer declarer) {
