@@ -21,9 +21,9 @@ public class TopologyMain {
     Config conf = new Config();
     conf.put("wordsFile", args[0]);
     conf.setDebug(false);
+    conf.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 1);
 
     // Topology run
-    conf.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 1);
     LocalCluster cluster = new LocalCluster();
     cluster.submitTopology("Getting-Started-Toplogie", conf, builder.createTopology());
     Thread.sleep(1000);
