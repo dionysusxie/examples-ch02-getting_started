@@ -16,14 +16,8 @@ public class WordCounter extends BaseBasicBolt {
   String name;
   Map<String, Integer> counters;
 
-  // At the end of the spout (when the cluster is shutdown) we will show the
-  // word counters
   @Override
-  public void cleanup() {
-    System.out.println("--- Word Counter [" + name + "-" + id + "] ---");
-    for (Map.Entry<String, Integer> entry : counters.entrySet()) {
-      System.out.println(entry.getKey() + ": " + entry.getValue());
-    }
+  public void declareOutputFields(OutputFieldsDeclarer declarer) {
   }
 
   // On create
@@ -34,8 +28,14 @@ public class WordCounter extends BaseBasicBolt {
     this.id = context.getThisTaskId();
   }
 
+  // At the end of the spout (when the cluster is shutdown) we will show the
+  // word counters
   @Override
-  public void declareOutputFields(OutputFieldsDeclarer declarer) {
+  public void cleanup() {
+    System.out.println("--- Word Counter [" + name + "-" + id + "] ---");
+    for (Map.Entry<String, Integer> entry : counters.entrySet()) {
+      System.out.println(entry.getKey() + ": " + entry.getValue());
+    }
   }
 
   @Override
@@ -50,5 +50,4 @@ public class WordCounter extends BaseBasicBolt {
       counters.put(str, c);
     }
   }
-
 }
