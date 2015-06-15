@@ -9,15 +9,15 @@ import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseBasicBolt;
 import backtype.storm.tuple.Tuple;
 
+
 public class WordCounter extends BaseBasicBolt {
 
   Integer id;
   String name;
   Map<String, Integer> counters;
 
-  /**
-   * At the end of the spout (when the cluster is shutdown We will show the word counters
-   */
+  // At the end of the spout (when the cluster is shutdown) we will show the
+  // word counters
   @Override
   public void cleanup() {
     System.out.println("--- Word Counter [" + name + "-" + id + "] ---");
@@ -26,9 +26,7 @@ public class WordCounter extends BaseBasicBolt {
     }
   }
 
-  /**
-   * On create
-   */
+  // On create
   @Override
   public void prepare(Map stormConf, TopologyContext context) {
     this.counters = new HashMap<String, Integer>();
@@ -37,15 +35,14 @@ public class WordCounter extends BaseBasicBolt {
   }
 
   @Override
-  public void declareOutputFields(OutputFieldsDeclarer declarer) {}
-
+  public void declareOutputFields(OutputFieldsDeclarer declarer) {
+  }
 
   @Override
   public void execute(Tuple input, BasicOutputCollector collector) {
     String str = input.getString(0);
-    /**
-     * If the word dosn't exist in the map we will create this, if not We will add 1
-     */
+
+    // If the word doesn't exist in the map we will create it, or we'll add 1
     if (!counters.containsKey(str)) {
       counters.put(str, 1);
     } else {
@@ -53,4 +50,5 @@ public class WordCounter extends BaseBasicBolt {
       counters.put(str, c);
     }
   }
+
 }
