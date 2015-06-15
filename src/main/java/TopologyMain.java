@@ -14,7 +14,7 @@ public class TopologyMain {
     TopologyBuilder builder = new TopologyBuilder();
     builder.setSpout("word-reader", new WordReader());
     builder.setBolt("word-normalizer", new WordNormalizer()).shuffleGrouping("word-reader");
-    builder.setBolt("word-counter", new WordCounter(), 1).fieldsGrouping("word-normalizer",
+    builder.setBolt("word-counter", new WordCounter(), 2).fieldsGrouping("word-normalizer",
         new Fields("word"));
 
     // Configuration
