@@ -10,13 +10,12 @@ import backtype.storm.tuple.Values;
 public class WordNormalizer extends BaseBasicBolt {
 
   @Override
-  public void cleanup() {}
+  public void cleanup() {
+  }
 
-  /**
-   * The bolt will receive the line from the words file and process it to Normalize this line
-   * 
-   * The normalize will be put the words in lower case and split the line to get all words in this
-   */
+  // The bolt will receive the line from the words file and process it to
+  // normalize this line. The normalize will be put the words in lower case and
+  // split the line to get all words.
   @Override
   public void execute(Tuple input, BasicOutputCollector collector) {
     String sentence = input.getString(0);
@@ -30,10 +29,7 @@ public class WordNormalizer extends BaseBasicBolt {
     }
   }
 
-
-  /**
-   * The bolt will only emit the field "word"
-   */
+  // The bolt will only emit the field "word".
   @Override
   public void declareOutputFields(OutputFieldsDeclarer declarer) {
     declarer.declare(new Fields("word"));
