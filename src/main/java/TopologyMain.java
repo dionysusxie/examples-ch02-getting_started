@@ -8,14 +8,16 @@ import bolts.WordNormalizer;
 
 
 public class TopologyMain {
-  public static void main(String[] args) throws InterruptedException {
 
+  public static void main(String[] args) throws InterruptedException {
     // Topology definition
     TopologyBuilder builder = new TopologyBuilder();
     builder.setSpout("word-reader", new WordReader());
     builder.setBolt("word-normalizer", new WordNormalizer()).shuffleGrouping("word-reader");
-    builder.setBolt("word-counter", new WordCounter(), 2).fieldsGrouping("word-normalizer",
-        new Fields("word"));
+    //    builder.setBolt("word-counter", new WordCounter(), 2).fieldsGrouping("word-normalizer",
+    //        new Fields("word"));
+    builder.setBolt("word-counter", new WordCounter(), 2).customGrouping("word-normalizer",
+        new grouping.ModuleGrouping());
 
     // Configuration
     Config conf = new Config();
