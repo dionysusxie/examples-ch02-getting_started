@@ -9,7 +9,7 @@ import backtype.storm.generated.GlobalStreamId;
 import backtype.storm.grouping.CustomStreamGrouping;
 import backtype.storm.task.WorkerTopologyContext;
 
-public class ModuleGrouping implements CustomStreamGrouping {
+public class MyGlobalGrouping implements CustomStreamGrouping {
   private List<Integer> target;
 
   @Override
@@ -17,20 +17,11 @@ public class ModuleGrouping implements CustomStreamGrouping {
       List<Integer> targetTasks) {
     List<Integer> sorted = new ArrayList<Integer>(targetTasks);
     Collections.sort(sorted);
-
-    String tmp = "";
-    for (Integer i : sorted) {
-      tmp += " " + i;
-    }
-    System.out.println("--- target 1: " + tmp);
-
     this.target = Arrays.asList(sorted.get(0));
   }
 
   @Override
   public List<Integer> chooseTasks(int srcTaskId, List<Object> values) {
-    System.out.println("chooseTasks() source task id = " + srcTaskId);
     return this.target;
   }
-
 }

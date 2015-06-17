@@ -17,7 +17,7 @@ public class TopologyMain {
     //    builder.setBolt("word-counter", new WordCounter(), 2).fieldsGrouping("word-normalizer",
     //        new Fields("word"));
     builder.setBolt("word-counter", new WordCounter(), 2).customGrouping("word-normalizer",
-        new grouping.ModuleGrouping());
+        new grouping.MyGlobalGrouping());
 
     // Configuration
     Config conf = new Config();
